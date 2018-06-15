@@ -40,6 +40,18 @@ resource "aws_security_group_rule" "serf_lan_udp" {
   cidr_blocks       = ["${var.cidr_blocks}"]
 }
 
+#Consul Connect Default ports - TCP
+resource "aws_security_group_rule" "server_connect_tcp" {
+  count = "${var.create ? 1 : 0}"
+
+  security_group_id = "${module.consul_client_ports_aws.consul_client_sg_id}"
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = 20000
+  to_port           = 20255
+  cidr_blocks       = ["${var.cidr_blocks}"]
+}
+
 # CLI RPC (Default 8400) - TCP. This is used by all agents to handle RPC from the CLI on TCP only.
 # This is deprecated in Consul 0.8 and later - all CLI commands were changed to use the
 # HTTP API and the RPC interface was completely removed.
