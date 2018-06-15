@@ -44,7 +44,7 @@ resource "aws_security_group_rule" "serf_lan_udp" {
 resource "aws_security_group_rule" "server_connect_tcp" {
   count = "${var.create ? 1 : 0}"
 
-  security_group_id = "${module.consul_client_ports_aws.consul_client_sg_id}"
+  security_group_id = "${aws_security_group.consul_client.id}"
   type              = "ingress"
   protocol          = "tcp"
   from_port         = 20000
