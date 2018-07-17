@@ -2,10 +2,6 @@ terraform {
   required_version = ">= 0.11.5"
 }
 
-provider "aws" {
-  version = "~> 1.12"
-}
-
 # https://www.consul.io/docs/agent/options.html#ports
 resource "aws_security_group" "consul_client" {
   count = "${var.create ? 1 : 0}"
